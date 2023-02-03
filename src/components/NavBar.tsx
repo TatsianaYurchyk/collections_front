@@ -15,8 +15,8 @@ const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccess
     return (
         <Navbar bg="primary" variant="dark" expand="sm" sticky="top">
             <Container>
-                <Navbar.Brand as={Link} to="/">
-                    Task 4
+                <Navbar.Brand className="navbarBrand" as={Link} to="/">
+                    Your best collection
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="main-navbar" />
                 <Navbar.Collapse id="main-navbar">

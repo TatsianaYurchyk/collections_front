@@ -13,6 +13,8 @@ code {
     monospace;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Solitreo&display=swap');
+
 .width100 {
   width: 100%;
 }
@@ -36,5 +38,18 @@ code {
 
 .col_width{
   width: 25%;
-  
+}
+
+.navbarBrand{
+  font-family: 'Solitreo', cursive;
+  font-size: 3em;
+}
+
+/* .page_container{
+  position: relative;
+} */
+.adminBtn{
+  position: sticky;
+  top: 100px;
+  z-index: 1;
 }

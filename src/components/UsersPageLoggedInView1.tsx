@@ -295,8 +295,9 @@ const UsersPageLoggedInView = ({ loggedInUser,onLogoutSuccessful }: UsersPagePro
 	return (
 		<>
 			{users.length > 0 ? (
-				<>
-					<ButtonGroup aria-label="Basic example" className="mb-3 width100">
+				<div className="page_container">
+					<div className="d-flex justify-content-center"> <h1 className="center">Admin Panel</h1></div>
+					<ButtonGroup aria-label="Basic example" className="mb-3 width100 adminBtn">
 						<Button variant="danger" onClick={blockStatusAll}>
 							Block
 						</Button>
@@ -337,7 +338,7 @@ const UsersPageLoggedInView = ({ loggedInUser,onLogoutSuccessful }: UsersPagePro
      
     </div>
 	
-				</>
+				</div>
 			) : (
 				<p>Wait,there is nothing to see... </p>
 			)}
