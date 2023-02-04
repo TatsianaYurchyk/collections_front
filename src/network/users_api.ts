@@ -5,8 +5,8 @@ import { User } from "../models/user";
 const USER_API_URL = "https://collections-mern-api.onrender.com";
 // const USER_API_URL = "http://localhost:8000";
 
-async function fetchData(input: RequestInfo, init?: RequestInit) {
-    const response = await fetch(input, init);
+async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
+    const response = await fetch(input, init );
     if (response.ok) {
         return response;
     } else {
@@ -24,7 +24,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
 
 export async function getLoggedInUser(): Promise<User> {
     // const response = await fetchData("/api/users", { method: "GET" });
-    const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET" });
+    const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET", credentials: 'include' });
     return response.json();
 }
 
@@ -42,6 +42,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(credentials),
+            credentials: 'include' 
         });
     return response.json();
 }
@@ -59,21 +60,22 @@ export async function login(credentials: LoginCredentials): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(credentials),
+            credentials: 'include' 
         });
     return response.json();
 }
 
 export async function logout() {
-    await fetchData("/api/users/logout", { method: "POST" });
+    await fetchData("/api/users/logout", { method: "POST", credentials: 'include'  });
 }
 
 export async function fetchUsers(): Promise<UserNote[]> {
-    const response = await fetchData(`${USER_API_URL}/api/users/get`, { method: "GET" });
+    const response = await fetchData(`${USER_API_URL}/api/users/get`, { method: "GET", credentials: 'include'  });
     return response.json();
 }
 
 export async function deleteUser(userId: string) {
-    await fetchData(`${USER_API_URL}/api/users/` + userId, { method: "DELETE" });
+    await fetchData(`${USER_API_URL}/api/users/` + userId, { method: "DELETE", credentials: 'include'  });
 }
 
 export async function blockStatus(userId: string): Promise<User> {
@@ -84,6 +86,7 @@ export async function blockStatus(userId: string): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({"status":"blocked"}),
+            credentials: 'include' 
         });
     return response.json();
 }
@@ -96,6 +99,7 @@ export async function activateStatus(userId: string): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({"status":"active"}),
+            credentials: 'include' 
         });
     return response.json();
 }

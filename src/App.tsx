@@ -20,12 +20,20 @@ function App() {
 			try {
 				const user = await UsersApi.getLoggedInUser();
 				setLoggedInUser(user);
+				
 			} catch (error) {
 				console.error(error);
 			}
 		}
 		fetchLoggedInUser();
 	}, []);
+
+	// useEffect(() => {
+	// 	loggedInUser? localStorage.setItem("loggedInUser", loggedInUser.username):localStorage.removeItem("loggedInUser");
+	// }, [loggedInUser]);
+
+	//loggedInUser? sessionStorage.setItem("loggedInUser", loggedInUser.username):sessionStorage.removeItem("loggedInUser");
+	
 
 	return (
 		<BrowserRouter>
