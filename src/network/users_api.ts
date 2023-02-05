@@ -105,7 +105,7 @@ export async function activateStatus(userId: string): Promise<User> {
 }
 
 export async function setAdmin(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/` + userId,
+    const response = await fetchData(`${USER_API_URL}/api/users/togglerole/` + userId,
         {
             method: "PATCH",
             headers: {
@@ -118,7 +118,7 @@ export async function setAdmin(userId: string): Promise<User> {
 }
 
 export async function setNotAdmin(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/` + userId,
+    const response = await fetchData(`${USER_API_URL}/api/users/togglerole/` + userId,
         {
             method: "PATCH",
             headers: {
