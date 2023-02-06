@@ -24,7 +24,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: R
 
 export async function getLoggedInUser(): Promise<User> {
     // const response = await fetchData("/api/users", { method: "GET" });
-    const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET", credentials: 'include' });
+    const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET", credentials: 'same-origin' });
     return response.json();
 }
 
@@ -42,7 +42,8 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(credentials),
-            credentials: 'include' 
+            // credentials: 'include' 
+            credentials: 'same-origin'
         });
     return response.json();
 }
@@ -60,22 +61,23 @@ export async function login(credentials: LoginCredentials): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(credentials),
-            credentials: 'include' 
+            // credentials: 'include' 
+            credentials: 'same-origin'
         });
     return response.json();
 }
 
 export async function logout() {
-    await fetchData("/api/users/logout", { method: "POST", credentials: 'include'  });
+    await fetchData("/api/users/logout", { method: "POST", credentials: 'same-origin' });
 }
 
 export async function fetchUsers(): Promise<UserNote[]> {
-    const response = await fetchData(`${USER_API_URL}/api/users/get`, { method: "GET", credentials: 'include'  });
+    const response = await fetchData(`${USER_API_URL}/api/users/get`, { method: "GET", credentials: 'same-origin' });
     return response.json();
 }
 
 export async function deleteUser(userId: string) {
-    await fetchData(`${USER_API_URL}/api/users/` + userId, { method: "DELETE", credentials: 'include'  });
+    await fetchData(`${USER_API_URL}/api/users/` + userId, { method: "DELETE", credentials: 'same-origin'  });
 }
 
 export async function blockStatus(userId: string): Promise<User> {
@@ -86,7 +88,7 @@ export async function blockStatus(userId: string): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({"status":"blocked"}),
-            credentials: 'include' 
+            credentials: 'same-origin'
         });
     return response.json();
 }
@@ -99,7 +101,7 @@ export async function activateStatus(userId: string): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({"status":"active"}),
-            credentials: 'include' 
+            credentials: 'same-origin'
         });
     return response.json();
 }
@@ -112,7 +114,7 @@ export async function setAdmin(userId: string): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({"role":"admin"}),
-            credentials: 'include' 
+            credentials: 'same-origin'
         });
     return response.json();
 }
@@ -125,7 +127,7 @@ export async function setNotAdmin(userId: string): Promise<User> {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({"role":"user"}),
-            credentials: 'include' 
+            credentials: 'same-origin'
         });
     return response.json();
 }
