@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import SignUpModal from './components/SignUpModal';
 import { User } from './models/user';
 import * as UsersApi from "./network/users_api";
+import AdminPage from './pages/AdminPage';
 import UsersPage from './pages/UsersPage';
 
 function App() {
@@ -48,8 +49,12 @@ function App() {
 					<Routes>
 						<Route
 							path='/'
-							element={<UsersPage loggedInUser={loggedInUser} onLogoutSuccessful={() => setLoggedInUser(null)} />}
+							element={<AdminPage loggedInUser={loggedInUser} onLogoutSuccessful={() => setLoggedInUser(null)} />}
 						/>
+							{/* <Route
+							path='/'
+							element={<UsersPage loggedInUser={loggedInUser} onLogoutSuccessful={() => setLoggedInUser(null)} />}
+						/> */}
 
 					</Routes>
 				</Container>

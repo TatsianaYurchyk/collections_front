@@ -21,17 +21,17 @@ import {
 } from "@mui/x-data-grid-pro";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-interface UsersPageProps {
+interface AdminPageProps {
 	loggedInUser: User;
 	onLogoutSuccessful: () => void;
 }
 
 // type Row = typeof initialRows[number];
 
-const UsersPageLoggedInView = ({
+const AdminPageLoggedInView = ({
 	loggedInUser,
 	onLogoutSuccessful,
-}: UsersPageProps) => {
+}: AdminPageProps) => {
 	const [users, setUsers] = useState<UserNote[]>([]);
 	const [isCheck, setIsCheck] = useState<UserNote[]>([]);
 	const [pageSize, setPageSize] = useState<number>(10);
@@ -287,4 +287,4 @@ const UsersPageLoggedInView = ({
 	);
 };
 
-export default UsersPageLoggedInView;
+export default AdminPageLoggedInView;

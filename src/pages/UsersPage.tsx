@@ -1,20 +1,20 @@
 import { Container} from "react-bootstrap";
-import UsersPageLoggedInView1 from "../components/UsersPageLoggedInView1";
-import UsersPageLoggedOutView from "../components/UsersPageLoggedOutView";
+import UserPageLoggedInView from "../components/UserPageLoggedInView";
+import UserPageLoggedOutView from "../components/UserPageLoggedOutView";
 import { User } from "../models/user";
 
-interface UsersPageProps {
+interface UserPageProps {
     loggedInUser: User | null,
     onLogoutSuccessful: () => void,
 }
 
-const UsersPage = ({ loggedInUser,onLogoutSuccessful }: UsersPageProps) => {
+const UsersPage = ({ loggedInUser,onLogoutSuccessful }: UserPageProps) => {
     return (
         <Container >
             <>
                 {loggedInUser
-                    ? <UsersPageLoggedInView1 loggedInUser={loggedInUser} onLogoutSuccessful={onLogoutSuccessful}/>
-                    : <UsersPageLoggedOutView />
+                    ? <UserPageLoggedInView loggedInUser={loggedInUser} onLogoutSuccessful={onLogoutSuccessful}/>
+                    : <UserPageLoggedOutView />
                 }
             </>
         </Container>
