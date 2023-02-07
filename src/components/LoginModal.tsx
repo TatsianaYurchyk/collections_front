@@ -22,7 +22,7 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
         try {
             const user = await UsersApi.login(credentials);
             onLoginSuccessful(user);
-            // localStorage.setItem("loggedInUser", JSON.stringify(user))
+            localStorage.setItem("loggedInUser", JSON.stringify(user))
         } catch (error) {
             if (error instanceof UnauthorizedError) {
                 setErrorText(error.message);

@@ -212,7 +212,7 @@ const AdminPageLoggedInView = ({
 		const toggleUserRole = users.find((user) => user._id === id);
 		toggleUserRole
 			? setAdmin(toggleUserRole).then((res) => {
-					loadUsers();
+				loadUsers();
 			  })
 			: loadUsers();
 	};
@@ -220,7 +220,9 @@ const AdminPageLoggedInView = ({
 		const toggleUserRole = users.find((user) => user._id === id);
 		toggleUserRole
 			? setNotAdmin(toggleUserRole).then((res) => {
-					loadUsers();
+					toggleUserRole.username === loggedInUser.username
+					? logout()
+					: loadUsers();
 			  })
 			: loadUsers();
 	};
