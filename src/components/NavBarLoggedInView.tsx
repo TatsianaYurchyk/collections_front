@@ -1,6 +1,8 @@
 import { Button, Navbar } from "react-bootstrap";
 import { User } from "../models/user";
 import * as UsersApi from "../network/users_api";
+import { useNavigate } from "react-router-dom"
+import { useState } from "react";
 
 interface NavBarLoggedInViewProps {
     user: User,
@@ -8,6 +10,9 @@ interface NavBarLoggedInViewProps {
 }
 
 const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProps) => {
+
+    const navigate = useNavigate();
+    const [adminPanel,setAdminPanel]=useState(false)
 
     async function logout() {
         try {
@@ -22,10 +27,21 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
 
     return (
         <>
+        {user.role==="admin"
+            ?<>
+            <Navbar.Text className="me-2">
+                You are an admin. Signed in as: {user.username}
+            </Navbar.Text>
+            {!adminPanel?
+            <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}}>Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)}}>Back to Home Page</Button>}
+            <Button onClick={logout}>Log Out</Button>
+            </>
+            :<>
             <Navbar.Text className="me-2">
                 Signed in as: {user.username}
             </Navbar.Text>
             <Button onClick={logout}>Log Out</Button>
+            </>}
         </>
     );
 }

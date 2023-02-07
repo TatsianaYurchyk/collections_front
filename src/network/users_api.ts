@@ -2,8 +2,8 @@ import { ConflictError, UnauthorizedError } from "../errors/http_errors";
 import { UserNote } from "../models/userNote";
 import { User } from "../models/user";
 
-const USER_API_URL = "https://collections-mern-api.onrender.com";
-// const USER_API_URL = "http://localhost:8000";
+// const USER_API_URL = "https://collections-mern-api.onrender.com";
+const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -34,14 +34,14 @@ export interface SignUpCredentials {
     password: string,
 }
 
-export async function signUp(credentials: SignUpCredentials): Promise<User> {
+export async function signUp(signupcredentials: SignUpCredentials): Promise<User> {
     const response = await fetchData(`${USER_API_URL}/api/users/signup`,
         {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(credentials),
+            body: JSON.stringify(signupcredentials),
             credentials: 'include' 
             // credentials: 'same-origin'
         });
@@ -72,16 +72,16 @@ export async function logout() {
 }
 
 export async function fetchUsers(): Promise<UserNote[]> {
-    const response = await fetchData(`${USER_API_URL}/api/users/get`, { method: "GET", credentials: 'include' });
+    const response = await fetchData(`${USER_API_URL}/api/users/admin/get`, { method: "GET", credentials: 'include' });
     return response.json();
 }
 
 export async function deleteUser(userId: string) {
-    await fetchData(`${USER_API_URL}/api/users/` + userId, { method: "DELETE", credentials: 'include'   });
+    await fetchData(`${USER_API_URL}/api/users/admin/` + userId, { method: "DELETE", credentials: 'include'   });
 }
 
 export async function blockStatus(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/` + userId,
+    const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
         {
             method: "PATCH",
             headers: {
@@ -94,7 +94,7 @@ export async function blockStatus(userId: string): Promise<User> {
 }
 
 export async function activateStatus(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/` + userId,
+    const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
         {
             method: "PATCH",
             headers: {
@@ -107,7 +107,7 @@ export async function activateStatus(userId: string): Promise<User> {
 }
 
 export async function setAdmin(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/togglerole/` + userId,
+    const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
         {
             method: "PATCH",
             headers: {
@@ -120,7 +120,7 @@ export async function setAdmin(userId: string): Promise<User> {
 }
 
 export async function setNotAdmin(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/togglerole/` + userId,
+    const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
         {
             method: "PATCH",
             headers: {

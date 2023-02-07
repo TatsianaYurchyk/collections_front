@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
-import { Route, Routes } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
-import LoginModal from './components/LoginModal';
-import NavBar from './components/NavBar';
-import SignUpModal from './components/SignUpModal';
-import { User } from './models/user';
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import { Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import LoginModal from "./components/LoginModal";
+import NavBar from "./components/NavBar";
+import SignUpModal from "./components/SignUpModal";
+import { User } from "./models/user";
 import * as UsersApi from "./network/users_api";
-import AdminPage from './pages/AdminPage';
-import UsersPage from './pages/UsersPage';
+import AdminPage from "./pages/AdminPage";
+import UsersPage from "./pages/UsersPage";
 
 function App() {
-
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
@@ -21,7 +20,6 @@ function App() {
 			try {
 				const user = await UsersApi.getLoggedInUser();
 				setLoggedInUser(user);
-				
 			} catch (error) {
 				console.error(error);
 			}
@@ -34,7 +32,6 @@ function App() {
 	// }, [loggedInUser]);
 
 	//loggedInUser? sessionStorage.setItem("loggedInUser", loggedInUser.username):sessionStorage.removeItem("loggedInUser");
-	
 
 	return (
 		<BrowserRouter>
@@ -48,17 +45,30 @@ function App() {
 				<Container className="page_padd">
 					<Routes>
 						<Route
-							path='/'
-							element={<AdminPage loggedInUser={loggedInUser} onLogoutSuccessful={() => setLoggedInUser(null)} />}
+							path="/"
+							element={
+								<UsersPage
+									loggedInUser={loggedInUser}
+									onLogoutSuccessful={() =>
+										setLoggedInUser(null)
+									}
+								/>
+							}
 						/>
-							{/* <Route
-							path='/'
-							element={<UsersPage loggedInUser={loggedInUser} onLogoutSuccessful={() => setLoggedInUser(null)} />}
-						/> */}
-
+						<Route
+							path="/adminPanel"
+							element={
+								<AdminPage
+									loggedInUser={loggedInUser}
+									onLogoutSuccessful={() =>
+										setLoggedInUser(null)
+									}
+								/>
+							}
+						/>
 					</Routes>
 				</Container>
-				{showSignUpModal &&
+				{showSignUpModal && (
 					<SignUpModal
 						onDismiss={() => setShowSignUpModal(false)}
 						onSignUpSuccessful={(user) => {
@@ -66,8 +76,8 @@ function App() {
 							setShowSignUpModal(false);
 						}}
 					/>
-				}
-				{showLoginModal &&
+				)}
+				{showLoginModal && (
 					<LoginModal
 						onDismiss={() => setShowLoginModal(false)}
 						onLoginSuccessful={(user) => {
@@ -75,7 +85,7 @@ function App() {
 							setShowLoginModal(false);
 						}}
 					/>
-				}
+				)}
 			</div>
 		</BrowserRouter>
 	);
