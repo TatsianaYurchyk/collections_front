@@ -34,7 +34,8 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
             </Navbar.Text>
             {!adminPanel?
             <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}}>Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)}}>Back to Home Page</Button>}
-            <Button onClick={logout}>Log Out</Button>
+            {/* <Button onClick={logout}>Log Out</Button> */}
+            <Button onClick={()=>{logout();navigate("/") }}>Log Out</Button>
             </>
             :<>
             <Navbar.Text className="me-2">

@@ -2,8 +2,8 @@ import { ConflictError, UnauthorizedError } from "../errors/http_errors";
 import { UserNote } from "../models/userNote";
 import { User } from "../models/user";
 
-const USER_API_URL = "https://collections-mern-api.onrender.com";
-// const USER_API_URL = "http://localhost:8000";
+ const USER_API_URL = "https://collections-mern-api.onrender.com";
+//const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -38,11 +38,12 @@ export async function signUp(signupcredentials: SignUpCredentials): Promise<User
     const response = await fetchData(`${USER_API_URL}/api/users/signup`,
         {
             method: "POST",
+            credentials: 'include' ,
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(signupcredentials),
-            credentials: 'include' 
+            
             // credentials: 'same-origin'
         });
     return response.json();
@@ -57,11 +58,12 @@ export async function login(logincredentials: LoginCredentials): Promise<User> {
     const response = await fetchData(`${USER_API_URL}/api/users/login`,
         {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(logincredentials),
-            credentials: 'include' 
+           
             // credentials: 'same-origin'
         });
     return response.json();

@@ -19,16 +19,15 @@ function App() {
 	// const [cartItems,setCartItems]= useLocalStorage<User| null>('loggedInUser',null)
 
 	useEffect(() => {
-		// async 
-		function fetchLoggedInUser() {
+		async function fetchLoggedInUser() {
 			try {
-				// const user = await UsersApi.getLoggedInUser();
-				// setLoggedInUser(user);
-				const jsonValue = localStorage.getItem('loggedInUser')
-   				if (jsonValue != null) {
-				//    JSON.parse(jsonValue)
-				setLoggedInUser(JSON.parse(jsonValue))};
-				console.log(jsonValue);
+				const user = await UsersApi.getLoggedInUser();
+				setLoggedInUser(user);
+				// const jsonValue = localStorage.getItem('loggedInUser')
+   				// if (jsonValue != null) {
+				      //    JSON.parse(jsonValue)
+				// setLoggedInUser(JSON.parse(jsonValue))};
+				// console.log(jsonValue);
 
 			} catch (error) {
 				console.error(error);
