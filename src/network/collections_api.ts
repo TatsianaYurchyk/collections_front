@@ -1,9 +1,10 @@
 import { ConflictError, UnauthorizedError } from "../errors/http_errors";
 import { UserNote } from "../models/userNote";
 import { User } from "../models/user";
+import { Topic } from "../models/topic";
 
-//  const USER_API_URL = "https://collections-mern-api.onrender.com";
-const USER_API_URL = "http://localhost:8000";
+ const USER_API_URL = "https://collections-mern-api.onrender.com";
+// const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -20,6 +21,11 @@ async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: R
             throw Error("Request failed with status: " + response.status + " message: " + errorMessage);
         }
     }
+}
+
+export async function fetchTopics(): Promise<Topic[]> {
+    const response = await fetchData(`${USER_API_URL}/api/topics`, { method: "GET", credentials: 'include' });
+    return response.json();
 }
 
 export async function getLoggedInUser(): Promise<User> {
@@ -73,10 +79,7 @@ export async function logout() {
     await fetchData("/api/users/logout", { method: "POST", credentials: 'include'  });
 }
 
-export async function fetchUsers(): Promise<UserNote[]> {
-    const response = await fetchData(`${USER_API_URL}/api/users/admin/get`, { method: "GET", credentials: 'include' });
-    return response.json();
-}
+
 
 export async function deleteUser(userId: string) {
     await fetchData(`${USER_API_URL}/api/users/admin/` + userId, { method: "DELETE", credentials: 'include'   });
