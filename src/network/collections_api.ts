@@ -2,6 +2,7 @@ import { ConflictError, UnauthorizedError } from "../errors/http_errors";
 import { UserNote } from "../models/userNote";
 import { User } from "../models/user";
 import { Topic } from "../models/topic";
+import { Collection} from "../models/collection";
 
  const USER_API_URL = "https://collections-mern-api.onrender.com";
 // const USER_API_URL = "http://localhost:8000";
@@ -34,105 +35,102 @@ export async function getLoggedInUser(): Promise<User> {
     return response.json();
 }
 
-export interface SignUpCredentials {
-    username: string,
-    email: string,
-    password: string,
+export interface CollectionInput {
+    name: string,
+    description: string,
+    topic: string
 }
 
-export async function signUp(signupcredentials: SignUpCredentials): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/signup`,
+export async function createCollection(collection: CollectionInput): Promise<Collection> {
+    const response = await fetchData(`${USER_API_URL}/api/collections/create`,
         {
             method: "POST",
-            credentials: 'include' ,
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(signupcredentials),
-            
-            // credentials: 'same-origin'
+            body: JSON.stringify(collection),
         });
     return response.json();
 }
 
-export interface LoginCredentials {
-    username: string,
-    password: string,
-}
+// export interface LoginCredentials {
+//     username: string,
+//     password: string,
+// }
 
-export async function login(logincredentials: LoginCredentials): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/login`,
-        {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(logincredentials),
+// export async function login(logincredentials: LoginCredentials): Promise<User> {
+//     const response = await fetchData(`${USER_API_URL}/api/users/login`,
+//         {
+//             method: "POST",
+//             credentials: 'include',
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify(logincredentials),
            
-            // credentials: 'same-origin'
-        });
-    return response.json();
-}
+//             // credentials: 'same-origin'
+//         });
+//     return response.json();
+// }
 
-export async function logout() {
-    await fetchData("/api/users/logout", { method: "POST", credentials: 'include'  });
-}
+// export async function logout() {
+//     await fetchData("/api/users/logout", { method: "POST", credentials: 'include'  });
+// }
 
 
 
-export async function deleteUser(userId: string) {
-    await fetchData(`${USER_API_URL}/api/users/admin/` + userId, { method: "DELETE", credentials: 'include'   });
-}
+// export async function deleteUser(userId: string) {
+//     await fetchData(`${USER_API_URL}/api/users/admin/` + userId, { method: "DELETE", credentials: 'include'   });
+// }
 
-export async function blockStatus(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"status":"blocked"}),
-            credentials: 'include' 
-        });
-    return response.json();
-}
+// export async function blockStatus(userId: string): Promise<User> {
+//     const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
+//         {
+//             method: "PATCH",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({"status":"blocked"}),
+//             credentials: 'include' 
+//         });
+//     return response.json();
+// }
 
-export async function activateStatus(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"status":"active"}),
-            credentials: 'include' 
-        });
-    return response.json();
-}
+// export async function activateStatus(userId: string): Promise<User> {
+//     const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
+//         {
+//             method: "PATCH",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({"status":"active"}),
+//             credentials: 'include' 
+//         });
+//     return response.json();
+// }
 
-export async function setAdmin(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"role":"admin"}),
-            credentials: 'include' 
-        });
-    return response.json();
-}
+// export async function setAdmin(userId: string): Promise<User> {
+//     const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
+//         {
+//             method: "PATCH",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({"role":"admin"}),
+//             credentials: 'include' 
+//         });
+//     return response.json();
+// }
 
-export async function setNotAdmin(userId: string): Promise<User> {
-    const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"role":"user"}),
-            credentials: 'include' 
-        });
-    return response.json();
-}
+// export async function setNotAdmin(userId: string): Promise<User> {
+//     const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
+//         {
+//             method: "PATCH",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({"role":"user"}),
+//             credentials: 'include' 
+//         });
+//     return response.json();
+// }

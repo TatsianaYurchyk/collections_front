@@ -4,12 +4,18 @@ import { LoginCredentials } from "../network/users_api";
 import * as CollectionsApi from "../network/collections_api";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import TextInputField from "./form/TextInputField";
-// import SelectField from "./form/SelectField";
+import TextAreaInputField from "./form/TextAreaInputField";
+
 import { useEffect, useState } from 'react';
 import { UnauthorizedError } from "../errors/http_errors";
 import { Topic as TopicModel } from "../models/topic";
-import { Topic } from "@mui/icons-material";
+import { CountertopsOutlined, Topic } from "@mui/icons-material";
 import Select from 'react-select';
+import { Collection } from "../models/collection";
+import { CollectionInput } from "../network/collections_api";
+import { Console } from "console";
+// import { ValueType } from "react-select";
+
 
 
 interface CreateCollectionModalProps {
@@ -23,7 +29,7 @@ const CreateCollectionModal = ({ onDismiss }: CreateCollectionModalProps) => {
     const [topics, setTopics] = useState<TopicModel[]>([]);
     const [selectedOption, setSelectedOption] = useState<TopicModel |null>(null);
 
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginCredentials>();
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<CollectionInput>();
 
     useEffect(() => {
 		async function loadTopics() {
@@ -38,20 +44,38 @@ const CreateCollectionModal = ({ onDismiss }: CreateCollectionModalProps) => {
         console.log(topics)
 	}, []);
 
-    async function onSubmit() {
+    useEffect(() => {
+	topics.map(topic=>topic.value)
+        console.log(topics)
+	}, [topics]);
+
+    async function onSubmit(input: CollectionInput) {
         try {
-            const user = await CollectionsApi.fetchTopics();
-            // onLoginSuccessful(user);
-            // localStorage.setItem("loggedInUser", JSON.stringify(user))
-        } catch (error) {
-            // if (error instanceof UnauthorizedError) {
-            //     setErrorText(error.message);
+            let collectionResponse: Collection;
+            // if (noteToEdit) {
+            //     noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
             // } else {
-            //     alert(error);
+                // collectionResponse = await CollectionsApi.createCollection(input);
+                // console.log(input)
+                if (selectedOption) {
+               
+                    input.topic=selectedOption.value;
+                    if (input.topic) {
+
+                //collectionResponse = await CollectionsApi.createCollection(input)};
+                console.log(input)}
+                // console.log(selectedOption.value)
+            }
+        
             // }
+            // onNoteSaved(noteResponse);
+        } catch (error) {
             console.error(error);
+            alert(error);
         }
     }
+
+
     function withEvent(func: Function): React.ChangeEventHandler<any> {
         return (event: React.ChangeEvent<any>) => {
           const { target } = event;
@@ -81,16 +105,16 @@ const CreateCollectionModal = ({ onDismiss }: CreateCollectionModalProps) => {
                         placeholder="Name"
                         register={register}
                         registerOptions={{ required: "Required" }}
-                        error={errors.username}
+                        // error={errors.username}
                     />
-                    <TextInputField
+                    <TextAreaInputField
                         name="description"
                         label="Description"
                         type="text"
                         placeholder="Description"
                         register={register}
                         registerOptions={{ required: "Required" }}
-                        error={errors.password}
+                        // error={errors.password}
                     />
                     <Form.Label> Choose Topic</Form.Label>
                    <Select
@@ -99,6 +123,10 @@ const CreateCollectionModal = ({ onDismiss }: CreateCollectionModalProps) => {
         // onChange={withEvent(setSelectedOption)}
         onChange={setSelectedOption}
         options={topics}
+        name="topic"
+        
+        // register={register}
+        // registerOptions={{ required: "Required" }}
       />
 
 
