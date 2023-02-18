@@ -53,3 +53,13 @@ code {
   top: 100px;
   z-index: 1;
 }
+
+.flexEnd {
+  display: flex;
+  justify-content: space-between;
+  /* gap: 4px; */
+}
+
+.addMargin{
+  margin-bottom: 20px;
+}
