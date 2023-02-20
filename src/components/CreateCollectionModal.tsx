@@ -16,23 +16,28 @@ import { CollectionInput } from "../network/collections_api";
 import { Console } from "console";
 import { idText } from "typescript";
 import InputGroup from "react-bootstrap/InputGroup";
+// import Collection from "./Collection";
+
 // import { ValueType } from "react-select";
 
 interface CreateCollectionModalProps {
+	collectionToEdit?: Collection,
 	onDismiss: () => void;
-	onNoteSaved: (note: Collection) => void;
+	onCollectionSaved: (note: Collection) => void;
 	// onLoginSuccessful: (user: User) => void,
 }
 
 const CreateCollectionModal = ({
+	collectionToEdit,
 	onDismiss,
-	onNoteSaved,
+	onCollectionSaved,
 }: CreateCollectionModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [topics, setTopics] = useState<TopicModel[]>([]);
 	const [selectedOption, setSelectedOption] = useState<TopicModel | null>(
 		null
 	);
+	// const [formValues, setFormValues] = useState<any[]>([]);
 	const [formValues, setFormValues] = useState<any[]>([]);
 	const [toggle, setToggle] = useState(false);
 	const [countField, setCountField] = useState<number>(1);
@@ -42,7 +47,17 @@ const CreateCollectionModal = ({
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<CollectionInput>();
+	} = useForm<CollectionInput>(
+		{defaultValues: {
+            topic: collectionToEdit?.topic || "",
+            description: collectionToEdit?.description || "",
+            name: collectionToEdit?.name || "",
+            fields: collectionToEdit?.fields || [],
+        }}
+    
+	);
+
+ 
 
 	useEffect(() => {
 		async function loadTopics() {
@@ -60,6 +75,29 @@ const CreateCollectionModal = ({
 	useEffect(() => {
 		topics.map((topic) => topic.value);
 		// console.log(topics)
+	}, [topics]);
+
+	useEffect(() => {
+		async function loadCollection() {
+			try {
+				if (collectionToEdit) {
+				const collection = await CollectionsApi.getCollection(collectionToEdit._id);
+				setFormValues(collection.fields);
+				const newTopic=topics.find((topic)=>topic.value==collection.topic);
+					newTopic? setSelectedOption(newTopic):setSelectedOption(null);
+					// console.log(selectedOption)
+			
+			}
+				else {setFormValues([])
+					setSelectedOption(null)
+				}
+
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		loadCollection();
+
 	}, [topics]);
 
 	// const inputRef = useRef();
@@ -90,17 +128,17 @@ const CreateCollectionModal = ({
 		setToggle(true);
 	};
 
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		index: any
-	) => {
-		const values = [...formValues];
-		values[index].value = e.target.value;
-		setFormValues(values);
-		console.log(formValues);
-		console.log(e.target.value);
-		setToggle(false);
-	};
+	// const handleChange = (
+	// 	e: React.ChangeEvent<HTMLInputElement>,
+	// 	index: any
+	// ) => {
+	// 	const values = [...formValues];
+	// 	values[index].value = e.target.value;
+	// 	setFormValues(values);
+	// 	console.log(formValues);
+	// 	console.log(e.target.value);
+	// 	setToggle(false);
+	// };
 
 	const deleteField = (index: any) => {
 		const values = [...formValues];
@@ -111,20 +149,29 @@ const CreateCollectionModal = ({
 	async function onSubmit(input: CollectionInput) {
 		try {
 			let collectionResponse: Collection;
-
+			if (!collectionToEdit) {
 			if (selectedOption) {
 				input.topic = selectedOption.value;
 
 				if (input.topic) {
 					input.fields=formValues;
+					
 					console.log(input);
 					collectionResponse = await CollectionsApi.createCollection(
 						input
 					);
 
-					onNoteSaved(collectionResponse);
+					onCollectionSaved(collectionResponse);
+					console.log(input)
 				}
-			}
+			}} else if (selectedOption){ 
+				input.topic = selectedOption.value;
+				if (input.topic) {
+				input.fields=formValues;
+				console.log(input)
+			
+			collectionResponse = await CollectionsApi.updateCollection(collectionToEdit._id,input)
+		}}
 		} catch (error) {
 			console.error(error);
 			// alert(error);
@@ -162,7 +209,9 @@ const CreateCollectionModal = ({
 
 					<Select
 						className="addMargin"
-						defaultValue={selectedOption}
+						// defaultValue={selectedOption}
+						defaultValue= {selectedOption}
+					
 						// onChange={withEvent(setSelectedOption)}
 						onChange={setSelectedOption}
 						options={topics}
@@ -217,11 +266,11 @@ const CreateCollectionModal = ({
 						type="submit"
 						disabled={isSubmitting}
 						className="width100">
-						Create
+					{collectionToEdit?"Update":"Create"}
 					</Button>
 
 					<Button
-						onClick={() => console.log(formValues)}
+						onClick={() => console.log(selectedOption)}
 						className="width100">
 						Console
 					</Button>

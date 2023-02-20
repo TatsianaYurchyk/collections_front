@@ -20,6 +20,7 @@ const UserPageLoggedInView = ({
 	const [showCreateCollectionModal, setShowCreateCollectionModal] =useState(false);
 	const [collectionsLoading, setCollectionsLoading] = useState(true);
     const [showCollectionsLoadingError, setShowCollectionsLoadingError] = useState(false);
+	const [collectionToEdit, setCollectionToEdit] = useState<CollectionModel | null>(null);
 
 	useEffect(() => {
 	    async function loadCollections() {
@@ -39,8 +40,18 @@ const UserPageLoggedInView = ({
 	    loadCollections();
 	}, []);
 
+	async function deleteCollection(collection: CollectionModel) {
+        try {
+            await CollectionsApi.deleteCollection(collection._id);
+            setCollections(collections.filter(existingCollection => existingCollection._id !== collection._id));
+        } catch (error) {
+            console.error(error);
+            alert(error);
+        }
+    }
+
 	const collectionsGrid =
-        <Row xs={1} md={2} xl={3} 
+        <Row xs={1} md={2} xl={3} className="gx-3"
 		// className={`g-4 ${styles.notesGrid}`}
 		>
             {collections.map(collection => (
@@ -48,8 +59,8 @@ const UserPageLoggedInView = ({
                     <Collection
                         collection={collection}
                         // className={styles.note}
-                        // onCollectionClicked={setCollectionToEdit}
-                        // onDeleteCollectionClicked={deleteCollection}
+                        onUpdateCollectionClicked={setCollectionToEdit}
+                        onDeleteCollectionClicked={deleteCollection}
                     />
                 </Col>
             ))}
@@ -86,12 +97,24 @@ const UserPageLoggedInView = ({
 			{showCreateCollectionModal && (
 				<CreateCollectionModal
 					onDismiss={() => setShowCreateCollectionModal(false)}
-					onNoteSaved={(newCollection) => {
+					onCollectionSaved={(newCollection) => {
 						setCollections([...collections, newCollection]);
 						setShowCreateCollectionModal(false);
 					}}
 				/>
 			)}
+
+				{collectionToEdit &&
+                <CreateCollectionModal
+                    collectionToEdit={collectionToEdit}
+					
+                    onDismiss={() => setCollectionToEdit(null)}
+                    onCollectionSaved={(updatedCollection) => {
+                        setCollections(collections.map(existingCollection => existingCollection._id === updatedCollection._id ? updatedCollection : existingCollection));
+                        setCollectionToEdit(null);
+                    }}
+                />
+            }	
 		</div>
 	);
 };

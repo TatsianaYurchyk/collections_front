@@ -24,7 +24,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: R
 
 export async function getLoggedInUser(): Promise<User> {
     // const response = await fetchData("/api/users", { method: "GET" });
-    const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET", credentials: 'include' });
+    const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET", credentials: 'include'});
     return response.json();
 }
 

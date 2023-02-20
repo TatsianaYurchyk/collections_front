@@ -39,7 +39,7 @@ export interface CollectionInput {
     name: string,
     description: string,
     topic: string,
-    fields: Array<string>,
+    fields?: Array<string>,
 }
 
 export async function createCollection(collection: CollectionInput): Promise<Collection> {
@@ -58,6 +58,31 @@ export async function createCollection(collection: CollectionInput): Promise<Col
 export async function fetchCollections(): Promise<Collection[]> {
     const response = await fetchData(`${USER_API_URL}/api/collections`, { method: "GET", credentials: 'include' });
     return response.json();
+}
+
+export async function updateCollection(collectionId: string, collection: CollectionInput): Promise<Collection> {
+    const response = await fetchData(`${USER_API_URL}/api/collections/`+ collectionId,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(collection),
+        });
+    return response.json();
+}
+
+export async function getCollection(collectionId: string): Promise<Collection> {
+    const response = await fetchData(`${USER_API_URL}/api/collections/`+ collectionId,
+        {
+            method: "GET", credentials: 'include'
+          
+        });
+    return response.json();
+}
+
+export async function deleteCollection(collectionId: string) {
+    await fetchData(`${USER_API_URL}/api/collections/` + collectionId, { method: "DELETE" });
 }
 
 // export interface LoginCredentials {

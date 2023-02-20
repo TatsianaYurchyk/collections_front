@@ -3,17 +3,18 @@ import styleUtils from "../styles/utils.module.css";
 import { Card } from "react-bootstrap";
 import { Collection as CollectionModel } from "../models/collection";
 import { formatDate } from "../utils/formatDate";
-import { MdDelete } from "react-icons/md";
+import { MdBuild, MdDelete } from "react-icons/md";
 
 interface CollectionProps {
     collection: CollectionModel,
-    // onNoteClicked: (collection: CollectionModel) => void,
-    // onDeleteNoteClicked: (collection: CollectionModel) => void,
+    onUpdateCollectionClicked: (collection: CollectionModel) => void,
+    onDeleteCollectionClicked: (collection: CollectionModel) => void,
     className?: string,
 }
 
 const Collection = ({ collection,
-    //  onNoteClicked, onDeleteNoteClicked, 
+    onUpdateCollectionClicked,
+    onDeleteCollectionClicked, 
      className }: CollectionProps) => {
     const {
         name,
@@ -41,15 +42,26 @@ const Collection = ({ collection,
                 <Card.Title 
                 // className={styleUtils.flexCenter}
                 >
-                    {topic}
+                    {name}
                     <MdDelete
                         className="text-muted ms-auto"
                         onClick={(e) => {
-                            // onDeleteNoteClicked(collection);
+                            onDeleteCollectionClicked(collection);
                             e.stopPropagation();
                         }}
                     />
+                    <MdBuild className="text-muted ms-auto"
+                    onClick={(e) => {
+                        onUpdateCollectionClicked(collection);
+                        e.stopPropagation();
+                    }}
+                    />
                 </Card.Title>
+                <Card.Text 
+                // className={styles.cardText}
+                >
+                    topic: {topic}
+                </Card.Text>
                 <Card.Text 
                 // className={styles.cardText}
                 >
