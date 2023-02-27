@@ -4,15 +4,18 @@ import { Card } from "react-bootstrap";
 import { Collection as CollectionModel } from "../models/collection";
 import { formatDate } from "../utils/formatDate";
 import { MdBuild, MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 interface CollectionProps {
     collection: CollectionModel,
+    onCollectionClicked: (collection: CollectionModel) => void,
     onUpdateCollectionClicked: (collection: CollectionModel) => void,
     onDeleteCollectionClicked: (collection: CollectionModel) => void,
     className?: string,
 }
 
 const Collection = ({ collection,
+    onCollectionClicked,
     onUpdateCollectionClicked,
     onDeleteCollectionClicked, 
      className }: CollectionProps) => {
@@ -34,15 +37,16 @@ const Collection = ({ collection,
     return (
         <Card
             // className={`${styles.noteCard} ${className}`}
-            // onClick={() => onNoteClicked(collection)}
+            onClick={() => onCollectionClicked(collection)}
             >
             <Card.Body 
             // className={styles.cardBody}
             >
                 <Card.Title 
-                // className={styleUtils.flexCenter}
+                className="flexEnd "
                 >
                     {name}
+                    <div>
                     <MdDelete
                         className="text-muted ms-auto"
                         onClick={(e) => {
@@ -56,7 +60,9 @@ const Collection = ({ collection,
                         e.stopPropagation();
                     }}
                     />
+                    </div>
                 </Card.Title>
+                <Link to={`/collections/${collection._id}`}>
                 <Card.Text 
                 // className={styles.cardText}
                 >
@@ -67,6 +73,7 @@ const Collection = ({ collection,
                 >
                     {description}
                 </Card.Text>
+                </Link>
             </Card.Body>
             <Card.Footer className="text-muted">
                 {createdUpdatedText}

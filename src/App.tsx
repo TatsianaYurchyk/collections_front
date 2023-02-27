@@ -11,6 +11,7 @@ import AdminPage from "./pages/AdminPage";
 import UsersPage from "./pages/UsersPage";
 import { LoginProvider } from "./context/LoginContext";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import ItemsOfCollection from "./components/ItemsOfCollection";
 
 function App() {
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -75,6 +76,17 @@ function App() {
 									onLogoutSuccessful={() =>
 										setLoggedInUser(null)
 									}
+								/>
+							}
+						/>
+						<Route
+							path="/collections/:id"
+							element={
+								<ItemsOfCollection
+									// loggedInUser={loggedInUser}
+									// onLogoutSuccessful={() =>
+									// 	setLoggedInUser(null)
+									
 								/>
 							}
 						/>

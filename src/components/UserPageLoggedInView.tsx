@@ -6,6 +6,7 @@ import * as CollectionsApi from "../network/collections_api";
 import CreateCollectionModal from "./CreateCollectionModal";
 import { Collection as CollectionModel } from "../models/collection";
 import Collection from './Collection';
+import { Link } from "react-router-dom";
 
 interface UserPageProps {
 	loggedInUser: User;
@@ -21,6 +22,7 @@ const UserPageLoggedInView = ({
 	const [collectionsLoading, setCollectionsLoading] = useState(true);
     const [showCollectionsLoadingError, setShowCollectionsLoadingError] = useState(false);
 	const [collectionToEdit, setCollectionToEdit] = useState<CollectionModel | null>(null);
+	const [collectionToSee, setCollectionToSee] = useState<CollectionModel | null>(null);
 
 	useEffect(() => {
 	    async function loadCollections() {
@@ -29,7 +31,7 @@ const UserPageLoggedInView = ({
 	            setCollectionsLoading(true);
 	            const collections = await CollectionsApi.fetchCollections();
 	            setCollections(collections);
-				console.log(collections);
+				// console.log(collections);
 	        } catch (error) {
 	            console.error(error);
 	            setShowCollectionsLoadingError(true);
@@ -56,12 +58,15 @@ const UserPageLoggedInView = ({
 		>
             {collections.map(collection => (
                 <Col key={collection._id}>
+					{/* <Link to={`/collections/${collection._id}`}> */}
                     <Collection
                         collection={collection}
                         // className={styles.note}
+						onCollectionClicked={setCollectionToSee}
                         onUpdateCollectionClicked={setCollectionToEdit}
                         onDeleteCollectionClicked={deleteCollection}
                     />
+					{/* </Link> */}
                 </Col>
             ))}
         </Row>
@@ -88,7 +93,7 @@ const UserPageLoggedInView = ({
                 <>
                     {collections.length > 0
                         ? collectionsGrid
-                        : <p>You don't have any notes yet</p>
+                        : <p>You don't have any collections yet</p>
                     }
                 </>
             }

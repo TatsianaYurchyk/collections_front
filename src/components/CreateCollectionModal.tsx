@@ -171,6 +171,7 @@ const CreateCollectionModal = ({
 				console.log(input)
 			
 			collectionResponse = await CollectionsApi.updateCollection(collectionToEdit._id,input)
+			onCollectionSaved(collectionResponse);
 		}}
 		} catch (error) {
 			console.error(error);
@@ -205,6 +206,11 @@ const CreateCollectionModal = ({
 						registerOptions={{ required: "Required" }}
 						// error={errors.password}
 					/>
+					{collectionToEdit && selectedOption? (
+						<Form.Label> The collections's topic is {selectedOption.value}. If you want you can change it:</Form.Label>
+					) : (
+						""
+					)}
 					<Form.Label> Choose Topic</Form.Label>
 
 					<Select
@@ -217,6 +223,8 @@ const CreateCollectionModal = ({
 						options={topics}
 						name="topic"
 					/>
+					
+
 					{formValues.length ? (
 						<Form.Label> Additional Fields</Form.Label>
 					) : (

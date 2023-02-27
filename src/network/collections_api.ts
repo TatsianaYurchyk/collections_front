@@ -5,7 +5,7 @@ import { Topic } from "../models/topic";
 import { Collection} from "../models/collection";
 
  const USER_API_URL = "https://collections-mern-api.onrender.com";
-// const USER_API_URL = "http://localhost:8000";
+//  const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -59,6 +59,10 @@ export async function fetchCollections(): Promise<Collection[]> {
     const response = await fetchData(`${USER_API_URL}/api/collections`, { method: "GET", credentials: 'include' });
     return response.json();
 }
+export async function fetchCollectionsHomePage(): Promise<Collection[]> {
+    const response = await fetchData(`${USER_API_URL}/api/collections/all`, { method: "GET", credentials: 'include' });
+    return response.json();
+}
 
 export async function updateCollection(collectionId: string, collection: CollectionInput): Promise<Collection> {
     const response = await fetchData(`${USER_API_URL}/api/collections/`+ collectionId,
@@ -85,84 +89,3 @@ export async function deleteCollection(collectionId: string) {
     await fetchData(`${USER_API_URL}/api/collections/` + collectionId, { method: "DELETE" });
 }
 
-// export interface LoginCredentials {
-//     username: string,
-//     password: string,
-// }
-
-// export async function login(logincredentials: LoginCredentials): Promise<User> {
-//     const response = await fetchData(`${USER_API_URL}/api/users/login`,
-//         {
-//             method: "POST",
-//             credentials: 'include',
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(logincredentials),
-           
-//             // credentials: 'same-origin'
-//         });
-//     return response.json();
-// }
-
-// export async function logout() {
-//     await fetchData("/api/users/logout", { method: "POST", credentials: 'include'  });
-// }
-
-
-
-// export async function deleteUser(userId: string) {
-//     await fetchData(`${USER_API_URL}/api/users/admin/` + userId, { method: "DELETE", credentials: 'include'   });
-// }
-
-// export async function blockStatus(userId: string): Promise<User> {
-//     const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
-//         {
-//             method: "PATCH",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({"status":"blocked"}),
-//             credentials: 'include' 
-//         });
-//     return response.json();
-// }
-
-// export async function activateStatus(userId: string): Promise<User> {
-//     const response = await fetchData(`${USER_API_URL}/api/users/admin/` + userId,
-//         {
-//             method: "PATCH",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({"status":"active"}),
-//             credentials: 'include' 
-//         });
-//     return response.json();
-// }
-
-// export async function setAdmin(userId: string): Promise<User> {
-//     const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
-//         {
-//             method: "PATCH",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({"role":"admin"}),
-//             credentials: 'include' 
-//         });
-//     return response.json();
-// }
-
-// export async function setNotAdmin(userId: string): Promise<User> {
-//     const response = await fetchData(`${USER_API_URL}/api/users/admin/togglerole/` + userId,
-//         {
-//             method: "PATCH",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({"role":"user"}),
-//             credentials: 'include' 
-//         });
-//     return response.json();
-// }
