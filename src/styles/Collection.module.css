@@ -1,0 +1,9 @@
+.cardText {
+    text-decoration: none;
+    color: mediumvioletred;
+    }
+    
+    .card:hover {
+    scale: 1.1;
+    background-color: mediumturquoise;
+    }

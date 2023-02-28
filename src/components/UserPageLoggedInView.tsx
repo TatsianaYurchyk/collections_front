@@ -53,7 +53,7 @@ const UserPageLoggedInView = ({
     }
 
 	const collectionsGrid =
-        <Row xs={1} md={2} xl={3} className="gx-3"
+        <Row xs={1} md={2} xl={3} className="gx-4 gy-4"
 		// className={`g-4 ${styles.notesGrid}`}
 		>
             {collections.map(collection => (
@@ -61,6 +61,7 @@ const UserPageLoggedInView = ({
 					{/* <Link to={`/collections/${collection._id}`}> */}
                     <Collection
                         collection={collection}
+						homePage={false}
                         // className={styles.note}
 						onCollectionClicked={setCollectionToSee}
                         onUpdateCollectionClicked={setCollectionToEdit}
@@ -82,7 +83,7 @@ const UserPageLoggedInView = ({
 			</div>
 			<p className="text-center">UserPageLoggedInView</p>
 
-			<Button onClick={() => setShowCreateCollectionModal(true)}>
+			<Button onClick={() => setShowCreateCollectionModal(true)} className="blockCenter addMargin">
 				{/* {" "} */}
 				Create a new Collection
 			</Button>

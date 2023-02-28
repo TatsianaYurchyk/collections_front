@@ -6,7 +6,7 @@ import { Item } from "../models/item";
 import { Collection} from "../models/collection";
 
  const USER_API_URL = "https://collections-mern-api.onrender.com";
-//  const USER_API_URL = "http://localhost:8000";
+//   const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -71,7 +71,7 @@ export async function getItem(itemId: string): Promise<Item> {
     return response.json();
 }
 
-export async function itemCollection(itemId: string) {
-    await fetchData(`${USER_API_URL}/api/collections/` + itemId, { method: "DELETE" });
+export async function deleteItem(itemId: string) {
+    await fetchData(`${USER_API_URL}/api/collections/items/` + itemId, { method: "DELETE" });
 }
 

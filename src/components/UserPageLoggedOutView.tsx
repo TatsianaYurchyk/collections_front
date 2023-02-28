@@ -7,6 +7,7 @@ import CreateCollectionModal from "./CreateCollectionModal";
 import { Collection as CollectionModel } from "../models/collection";
 import Collection from './Collection';
 import { Link } from "react-router-dom";
+import { truncate } from "fs/promises";
 
 
 const UserPageLoggedOutView = () => {
@@ -39,15 +40,16 @@ const UserPageLoggedOutView = () => {
 		>
             {collections.map(collection => (
                 <Col key={collection._id}>
-					<Link to={`/collections/${collection._id}`}>
+					{/* <Link to={`/collections/${collection._id}`}> */}
                     <Collection
                         collection={collection}
+                        homePage={true}
                         // className={styles.note}
 						onCollectionClicked={setCollectionToSee}
                         onUpdateCollectionClicked={()=>console.log("impossible")}
                         onDeleteCollectionClicked={()=>console.log("impossible")}
                     />
-					</Link>
+					{/* </Link> */}
                 </Col>
             ))}
         </Row>

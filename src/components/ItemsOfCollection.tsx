@@ -50,9 +50,10 @@ const ItemsOfCollection = ()=>
 	const [collection, setCollection] = useState<Collection>();
 	const [fields, setFields] = useState<string[]>(["_id","name"]);
 	const [items, setItems] = useState<Item[]>([]);
-	// const [isCheck, setIsCheck] = useState<UserNote[]>([]);
+	const [isCheck, setIsCheck] = useState<Item[]>([]);
 	const [pageSize, setPageSize] = useState<number>(10);
 	const [showItemModal, setShowItemModal] =useState(false);
+
 
 	useEffect(() => {
 		async function loadCollection() {
@@ -89,8 +90,68 @@ const ItemsOfCollection = ()=>
 		loadItems();
 	}, [showItemModal]);
 
+	async function deleteItem(item: Item) {
+		try {
+			await ItemsApi.deleteItem(item._id);
+			setItems(
+				items.filter((existingItem) => existingItem._id !== item._id)
+			);
+		} catch (error) {
+			console.error(error);
+			alert(error);
+		}
+	}
+
+	async function loadItems() {
+		try {
+			if (id) {
+			// const collection = await CollectionsApi.getCollection(collectionToSee._id);
+			//const items = await ItemsApi.fetchItems(id)
+			const newItems= (await ItemsApi.fetchItems(id)).map(item=>Object.assign(item.properties,item))
+			setItems(newItems);
+			// setItems(items)
+			console.log(items)}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	const onRowsSelectionHandler = (ids: any) => {
+		const selectedRowsData = ids.map((id: any) =>
+			items.find((item) => item._id === id)
+		);
+		console.log(selectedRowsData);
+		setIsCheck(selectedRowsData);
+	};
+	// async function loadItems() {
+	// 	try {
+	// 		const items = await UsersApi.fetchUsers();
+	// 		setUsers(users);
+	// 		console.log("loadusers");
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 	}
+	// }
+
 	const columns:GridColumns=[];
 	fields.map(item=> columns.push({ field: item, headerName: item, width: 150 }));
+
+	const deleteAll = () => {
+		console.log(isCheck)
+		isCheck.map((item) =>
+			deleteItem(item)
+				// .then(() => {
+				// 	isCheck.find((item) =>
+				// 		item.username === loggedInUser.username
+				// 			? logout()
+				// 			: setIsCheck([])
+				// 	);
+				// })
+				.then((res) => {
+					loadItems();
+				})
+		);
+	};
 
 
 	return (
@@ -110,10 +171,10 @@ const ItemsOfCollection = ()=>
 						</Button>
 						{/* <Button variant="secondary" onClick={activateStatusAll}>
 							<FaLockOpen />
-						</Button>
+						</Button> */}
 						<Button variant="secondary" onClick={deleteAll}>
 							<FaTrashAlt />
-						</Button> */}
+						</Button>
 					</ButtonGroup>
 					<div style={{ height: 600, width: "100%" }}>
 						{/* <div style={{ display: 'flex', height: '100%' }}> */}
@@ -124,9 +185,9 @@ const ItemsOfCollection = ()=>
 							// rowsPerPageOptions={[10]}
 							checkboxSelection
 							disableSelectionOnClick
-							// onSelectionModelChange={(ids) =>
-							// 	onRowsSelectionHandler(ids)
-							// }
+							onSelectionModelChange={(ids) =>
+								onRowsSelectionHandler(ids)
+							}
 							getRowId={(row) => row._id}
 							// initialState={{
 							// 	pinnedColumns: {

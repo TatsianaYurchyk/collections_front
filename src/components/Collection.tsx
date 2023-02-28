@@ -1,5 +1,5 @@
-// import styles from "../styles/Note.module.css";
-import styleUtils from "../styles/utils.module.css";
+import styles from "../styles/Collection.module.css";
+// import styleUtils from "../styles/utils.module.css";
 import { Card } from "react-bootstrap";
 import { Collection as CollectionModel } from "../models/collection";
 import { formatDate } from "../utils/formatDate";
@@ -12,9 +12,11 @@ interface CollectionProps {
     onUpdateCollectionClicked: (collection: CollectionModel) => void,
     onDeleteCollectionClicked: (collection: CollectionModel) => void,
     className?: string,
+    homePage: boolean,
 }
 
 const Collection = ({ collection,
+    homePage,
     onCollectionClicked,
     onUpdateCollectionClicked,
     onDeleteCollectionClicked, 
@@ -36,7 +38,7 @@ const Collection = ({ collection,
 
     return (
         <Card
-            // className={`${styles.noteCard} ${className}`}
+            className={`${styles.card} ${className}`}
             onClick={() => onCollectionClicked(collection)}
             >
             <Card.Body 
@@ -46,7 +48,7 @@ const Collection = ({ collection,
                 className="flexEnd "
                 >
                     {name}
-                    <div>
+                    {!homePage && <div>
                     <MdDelete
                         className="text-muted ms-auto"
                         onClick={(e) => {
@@ -60,11 +62,11 @@ const Collection = ({ collection,
                         e.stopPropagation();
                     }}
                     />
-                    </div>
+                    </div>}
                 </Card.Title>
-                <Link to={`/collections/${collection._id}`}>
+                <Link to={`/collections/${collection._id}`} style={{ textDecoration: 'none' }}>
                 <Card.Text 
-                // className={styles.cardText}
+                className={`${styles.cardText} ${className}`}
                 >
                     topic: {topic}
                 </Card.Text>
