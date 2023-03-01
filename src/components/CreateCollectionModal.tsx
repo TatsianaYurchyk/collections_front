@@ -180,12 +180,12 @@ const CreateCollectionModal = ({
 	}
 
 	return (
-		<Modal show onHide={onDismiss}>
-			<Modal.Header closeButton>
+		<Modal show onHide={onDismiss} >
+			<Modal.Header closeButton className="modalBody">
 				<Modal.Title>Create a new Collection</Modal.Title>
 			</Modal.Header>
 
-			<Modal.Body>
+			<Modal.Body className="modalBody">
 				{errorText && <Alert variant="danger">{errorText}</Alert>}
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<TextInputField

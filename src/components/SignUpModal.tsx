@@ -34,13 +34,13 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 
     return (
         <Modal show onHide={onDismiss}>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton className="modalBody">
                 <Modal.Title>
                     Sign Up
                 </Modal.Title>
             </Modal.Header>
 
-            <Modal.Body>
+            <Modal.Body className="modalBody">
                 {errorText &&
                     <Alert variant="danger">
                         {errorText}
@@ -77,7 +77,8 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
                     <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="width100">
+                        className="width100 buttonColor"
+                        >
                         Sign Up
                     </Button>
                 </Form>

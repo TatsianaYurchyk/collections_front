@@ -79,7 +79,7 @@ const Collection = ({ collection,
                 </Card.Text>
                 </Link>
             </Card.Body>
-            <Card.Footer className="text-muted">
+            <Card.Footer className=" cardFooter">
                 {createdUpdatedText}
             </Card.Footer>
         </Card>

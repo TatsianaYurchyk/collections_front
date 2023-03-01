@@ -35,14 +35,14 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
     }
 
     return (
-        <Modal show onHide={onDismiss}>
-            <Modal.Header closeButton>
+        <Modal show onHide={onDismiss} >
+            <Modal.Header closeButton className="modalBody">
                 <Modal.Title>
                     Log In
                 </Modal.Title>
             </Modal.Header>
 
-            <Modal.Body>
+            <Modal.Body className="modalBody">
                 {errorText &&
                     <Alert variant="danger">
                         {errorText}
@@ -70,7 +70,7 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
                     <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="width100">
+                        className="width100 buttonColor">
                         Log In
                     </Button>
                 </Form>

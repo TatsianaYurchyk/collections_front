@@ -160,14 +160,14 @@ const ItemModal = ({
 	
 
 	return (
-		<Modal show onHide={onDismiss}>
-		<Modal.Header closeButton>
-			<Modal.Title>
+		<Modal show onHide={onDismiss} >
+		<Modal.Header closeButton className="modalBody">
+			<Modal.Title >
 			{itemToEdit?"Update the ":"Create an"}	Item of Collection {collection.name}
 			</Modal.Title>
 		</Modal.Header>
 
-		<Modal.Body>
+		<Modal.Body className="modalBody">
 			{errorText &&
 				<Alert variant="danger">
 					{errorText}

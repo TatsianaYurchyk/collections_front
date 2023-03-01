@@ -24,11 +24,8 @@ const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccess
                 <Navbar.Brand className="navbarBrand" as={Link} to="/">
                     Your best collection
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="main-navbar" />
-                <Navbar.Collapse id="main-navbar">
                 <div className="toggleButton"
-    //   value="check"
-    //   selected={dark}
+    
       onChange={() => {
         setDark(!dark);
       }}
@@ -37,6 +34,9 @@ const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccess
         {dark? <Brightness3Icon />:<WbSunnyIcon />}
 
     </div>
+                <Navbar.Toggle aria-controls="main-navbar" className="blockCenter" />
+                <Navbar.Collapse id="main-navbar">
+                
                 
                     <Nav className="ms-auto">
                         {loggedInUser
