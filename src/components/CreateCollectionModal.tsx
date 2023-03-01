@@ -249,10 +249,10 @@ const CreateCollectionModal = ({
 
 					{!toggle ? (
 						<Button
-							className="addMargin"
+							className="addMargin buttonColor"
 							onClick={addBtnClick}
 							variant="secondary">
-							Add new
+							Add new field
 						</Button>
 					) : (
 						<InputGroup className="mb-3">
@@ -273,15 +273,11 @@ const CreateCollectionModal = ({
 					<Button
 						type="submit"
 						disabled={isSubmitting}
-						className="width100">
+						className="width100 buttonColor">
 					{collectionToEdit?"Update":"Create"}
+					
 					</Button>
 
-					<Button
-						onClick={() => console.log(selectedOption)}
-						className="width100">
-						Console
-					</Button>
 				</Form>
 			</Modal.Body>
 		</Modal>

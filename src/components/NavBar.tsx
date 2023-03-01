@@ -1,8 +1,12 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { User } from "../models/user";
 import NavBarLoggedInView from "./NavBarLoggedInView";
 import NavBarLoggedOutView from "./NavBarLoggedOutView";
 import { Link } from "react-router-dom";
+import ToggleButton from '@mui/material/ToggleButton';
+import { useState } from "react";
+import Brightness3Icon from '@mui/icons-material/Brightness3';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
 interface NavBarProps {
     loggedInUser: User | null,
@@ -13,6 +17,7 @@ interface NavBarProps {
 }
 
 const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccessful, onToggleThemeClicked }: NavBarProps) => {
+    const [dark, setDark] = useState(false);
     return (
         <Navbar className="navBar" variant="dark" expand="sm" sticky="top">
             <Container>
@@ -21,7 +26,18 @@ const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccess
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="main-navbar" />
                 <Navbar.Collapse id="main-navbar">
-                <button onClick={onToggleThemeClicked}>Switch Theme</button>
+                <div className="toggleButton"
+    //   value="check"
+    //   selected={dark}
+      onChange={() => {
+        setDark(!dark);
+      }}
+      onClick={()=>{setDark(!dark);onToggleThemeClicked()}}
+    >
+        {dark? <Brightness3Icon />:<WbSunnyIcon />}
+
+    </div>
+                
                     <Nav className="ms-auto">
                         {loggedInUser
                             ? <NavBarLoggedInView user={loggedInUser} onLogoutSuccessful={onLogoutSuccessful} />

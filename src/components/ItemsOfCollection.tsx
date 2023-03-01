@@ -166,7 +166,7 @@ const ItemsOfCollection = ()=>
 					<ButtonGroup
 						aria-label="Basic example"
 						className="mb-3 width100 adminBtn">
-						<Button variant="primary" onClick={() => setShowItemModal(true)}>
+						<Button className="buttonColor"  onClick={() => setShowItemModal(true)}>
 							Add new Item
 						</Button>
 						{/* <Button variant="secondary" onClick={activateStatusAll}>
