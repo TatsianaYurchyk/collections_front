@@ -43,6 +43,7 @@ const Collection = ({ collection,
             >
             <Card.Body 
             // className={styles.cardBody}
+            className="cardBody"
             >
                 <Card.Title 
                 className="flexEnd "
@@ -50,13 +51,14 @@ const Collection = ({ collection,
                     {name}
                     {!homePage && <div>
                     <MdDelete
-                        className="text-muted ms-auto"
+                        className="text-muted icon"
                         onClick={(e) => {
                             onDeleteCollectionClicked(collection);
                             e.stopPropagation();
                         }}
                     />
-                    <MdBuild className="text-muted ms-auto"
+                    <MdBuild className="text-muted mar-l icon"
+                      
                     onClick={(e) => {
                         onUpdateCollectionClicked(collection);
                         e.stopPropagation();

@@ -35,7 +35,7 @@ const UserPageLoggedOutView = () => {
 	}, []);
 
     const collectionsGrid =
-        <Row xs={1} md={2} xl={3} className="gx-3"
+        <Row xs={1} md={2} xl={3} className="gx-4 gy-4"
 		// className={`g-4 ${styles.notesGrid}`}
 		>
             {collections.map(collection => (

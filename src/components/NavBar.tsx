@@ -9,18 +9,19 @@ interface NavBarProps {
     onSignUpClicked: () => void,
     onLoginClicked: () => void,
     onLogoutSuccessful: () => void,
+    onToggleThemeClicked: ()=> void,
 }
 
-const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccessful }: NavBarProps) => {
+const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccessful, onToggleThemeClicked }: NavBarProps) => {
     return (
-        <Navbar bg="primary" variant="dark" expand="sm" sticky="top">
+        <Navbar className="navBar" variant="dark" expand="sm" sticky="top">
             <Container>
                 <Navbar.Brand className="navbarBrand" as={Link} to="/">
                     Your best collection
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="main-navbar" />
                 <Navbar.Collapse id="main-navbar">
-                    
+                <button onClick={onToggleThemeClicked}>Switch Theme</button>
                     <Nav className="ms-auto">
                         {loggedInUser
                             ? <NavBarLoggedInView user={loggedInUser} onLogoutSuccessful={onLogoutSuccessful} />

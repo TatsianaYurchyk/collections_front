@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  background: #fafafa;
+  /* background: rgb(231, 194, 112); */
+  background: whitesmoke;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -64,4 +65,26 @@ code {
 .addMargin{
   margin-bottom: 20px;
 }
+
+.mar-l{
+  margin-left: 15px;
+}
+
+.icon:hover {
+  scale: 2;
+}
+/* 
+.cardBody{
+  background: rgba(7, 6, 6, 0.795);
+} */
+
+.buttonColor{
+  background-color: rgb(64, 179, 199);
+  border: none;
+}
+
+.buttonColor:hover{
+  background-color: rgb(55, 148, 165);
+}
+
 

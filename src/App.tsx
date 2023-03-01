@@ -12,12 +12,19 @@ import UsersPage from "./pages/UsersPage";
 import { LoginProvider } from "./context/LoginContext";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import ItemsOfCollection from "./components/ItemsOfCollection";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, GlobalStyles } from "./components/Theme";
 
 function App() {
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
 	// const [cartItems,setCartItems]= useLocalStorage<User| null>('loggedInUser',null)
+	const [theme, setTheme] = useState("light");
+
+	const toggleTheme = () => {
+		theme === "light" ? setTheme("dark") : setTheme("light");
+	  };
 
 	useEffect(() => {
 		async function fetchLoggedInUser() {
@@ -46,7 +53,9 @@ function App() {
 	//loggedInUser? sessionStorage.setItem("loggedInUser", loggedInUser.username):sessionStorage.removeItem("loggedInUser");
 
 	return (
-		<LoginProvider>
+		// <LoginProvider>
+		<ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+		<GlobalStyles />
 		<BrowserRouter>
 			<div>
 				<NavBar
@@ -54,6 +63,7 @@ function App() {
 					onLoginClicked={() => setShowLoginModal(true)}
 					onSignUpClicked={() => setShowSignUpModal(true)}
 					onLogoutSuccessful={() => setLoggedInUser(null)}
+					onToggleThemeClicked={toggleTheme}
 				/>
 				<Container className="page_padd">
 					<Routes>
@@ -112,7 +122,8 @@ function App() {
 				)}
 			</div>
 		</BrowserRouter>
-		</LoginProvider>
+		{/* </LoginProvider> */}
+		</ThemeProvider>
 	);
 }
 

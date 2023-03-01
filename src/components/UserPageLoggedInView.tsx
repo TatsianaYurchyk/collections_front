@@ -83,7 +83,7 @@ const UserPageLoggedInView = ({
 			</div>
 			<p className="text-center">UserPageLoggedInView</p>
 
-			<Button onClick={() => setShowCreateCollectionModal(true)} className="blockCenter addMargin">
+			<Button onClick={() => setShowCreateCollectionModal(true)} className="blockCenter addMargin buttonColor">
 				{/* {" "} */}
 				Create a new Collection
 			</Button>

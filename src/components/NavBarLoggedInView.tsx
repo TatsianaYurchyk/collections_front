@@ -33,15 +33,15 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
                 You are an admin. Signed in as: {user.username}
             </Navbar.Text>
             {!adminPanel?
-            <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}}>Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)}}>Back to Home Page</Button>}
+            <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}} className="buttonColor">Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)}}>Back to Home Page</Button>}
             {/* <Button onClick={logout}>Log Out</Button> */}
-            <Button onClick={()=>{logout();navigate("/") }}>Log Out</Button>
+            <Button onClick={()=>{logout();navigate("/") }} className="buttonColor">Log Out</Button>
             </>
             :<>
             <Navbar.Text className="me-2">
                 Signed in as: {user.username}
             </Navbar.Text>
-            <Button onClick={logout}>Log Out</Button>
+            <Button className="buttonColor" onClick={logout}>Log Out</Button>
             </>}
         </>
     );
