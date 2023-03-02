@@ -18,7 +18,7 @@ export const darkTheme = {
     body: "#000",
     textColor: "#fff",
     cardColor:"#000 ",
-    navbarColor:"ightblue",
+    navbarColor:"#000 ",
     modalBody:"#000",
     tableBackground:"#000",
     tableColor:"#fff",

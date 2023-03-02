@@ -29,9 +29,10 @@ const UserPageLoggedInView = ({
 	        try {
 	            setShowCollectionsLoadingError(false);
 	            setCollectionsLoading(true);
-	            const collections = await CollectionsApi.fetchCollections();
+	            // const collections = await CollectionsApi.fetchCollections();
+	            const collections = await CollectionsApi.fetchCollections(loggedInUser._id);
 	            setCollections(collections);
-				// console.log(collections);
+				// console.log("id is " +loggedInUser._id);
 	        } catch (error) {
 	            console.error(error);
 	            setShowCollectionsLoadingError(true);
@@ -102,6 +103,7 @@ const UserPageLoggedInView = ({
 
 			{showCreateCollectionModal && (
 				<CreateCollectionModal
+				loggedInUserId={loggedInUser._id}
 					onDismiss={() => setShowCreateCollectionModal(false)}
 					onCollectionSaved={(newCollection) => {
 						setCollections([...collections, newCollection]);
@@ -113,7 +115,7 @@ const UserPageLoggedInView = ({
 				{collectionToEdit &&
                 <CreateCollectionModal
                     collectionToEdit={collectionToEdit}
-					
+					loggedInUserId={loggedInUser._id}
                     onDismiss={() => setCollectionToEdit(null)}
                     onCollectionSaved={(updatedCollection) => {
                         setCollections(collections.map(existingCollection => existingCollection._id === updatedCollection._id ? updatedCollection : existingCollection));

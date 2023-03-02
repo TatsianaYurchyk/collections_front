@@ -100,6 +100,17 @@ function App() {
 								/>
 							}
 						/>
+						<Route
+							path="/home"
+							element={
+								<UsersPage
+									loggedInUser={null}
+									onLogoutSuccessful={() =>
+										setLoggedInUser(null)
+									}
+								/>
+							}
+						/>
 					</Routes>
 				</Container>
 				{showSignUpModal && (

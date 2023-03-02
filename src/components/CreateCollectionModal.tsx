@@ -25,12 +25,14 @@ interface CreateCollectionModalProps {
 	onDismiss: () => void;
 	onCollectionSaved: (note: Collection) => void;
 	// onLoginSuccessful: (user: User) => void,
+	loggedInUserId:string;
 }
 
 const CreateCollectionModal = ({
 	collectionToEdit,
 	onDismiss,
 	onCollectionSaved,
+	loggedInUserId,
 }: CreateCollectionModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [topics, setTopics] = useState<TopicModel[]>([]);
@@ -155,6 +157,7 @@ const CreateCollectionModal = ({
 
 				if (input.topic) {
 					input.fields=formValues;
+					input.userId=loggedInUserId;
 					
 					console.log(input);
 					collectionResponse = await CollectionsApi.createCollection(
@@ -168,6 +171,7 @@ const CreateCollectionModal = ({
 				input.topic = selectedOption.value;
 				if (input.topic) {
 				input.fields=formValues;
+				// input.userId=loggedInUserId;
 				console.log(input)
 			
 			collectionResponse = await CollectionsApi.updateCollection(collectionToEdit._id,input)

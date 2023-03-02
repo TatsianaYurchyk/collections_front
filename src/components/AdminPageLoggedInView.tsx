@@ -251,6 +251,7 @@ const AdminPageLoggedInView = ({
 					<div style={{ height: 600, width: "100%" }}>
 						{/* <div style={{ display: 'flex', height: '100%' }}> */}
 						<DataGrid
+						className="table"
 							rows={users}
 							columns={columns}
 							// pageSize={10}

@@ -18,7 +18,6 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
         try {
             await UsersApi.logout();
             onLogoutSuccessful();
-            localStorage.removeItem("loggedInUser")
         } catch (error) {
             console.error(error);
             alert(error);
@@ -35,13 +34,14 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
             {!adminPanel?
             <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}} className="buttonColor">Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)} } className="buttonColor">Back to Home Page</Button>}
            
+            {/* <Button onClick={()=>{logout();navigate("/") }} className="buttonColor">Log Out</Button> */}
             <Button onClick={()=>{logout();navigate("/") }} className="buttonColor">Log Out</Button>
             </>
             :<>
             <Navbar.Text className="me-2">
                 Signed in as: {user.username}
             </Navbar.Text>
-            <Button className="buttonColor" onClick={logout}>Log Out</Button>
+            <Button className="buttonColor" onClick={()=>{logout();navigate("/") }}>Log Out</Button>
             </>}
         </>
     );

@@ -40,6 +40,7 @@ export interface CollectionInput {
     description: string,
     topic: string,
     fields?: Array<string>,
+    userId:string,
 }
 
 export async function createCollection(collection: CollectionInput): Promise<Collection> {
@@ -55,12 +56,16 @@ export async function createCollection(collection: CollectionInput): Promise<Col
     return response.json();
 }
 
-export async function fetchCollections(): Promise<Collection[]> {
-    const response = await fetchData(`${USER_API_URL}/api/collections`, { method: "GET", credentials: 'include' });
+// export async function fetchCollections(): Promise<Collection[]> {
+//     const response = await fetchData(`${USER_API_URL}/api/collections`, { method: "GET", credentials: 'include' });
+//     return response.json();
+// }
+export async function fetchCollections(userId: string): Promise<Collection[]> {
+    const response = await fetchData(`${USER_API_URL}/api/collections/`+userId, { method: "GET", credentials: 'include' });
     return response.json();
 }
 export async function fetchCollectionsHomePage(): Promise<Collection[]> {
-    const response = await fetchData(`${USER_API_URL}/api/collections/all`, { method: "GET", credentials: 'include' });
+    const response = await fetchData(`${USER_API_URL}/api/collections/all/alles`, { method: "GET", credentials: 'include' });
     return response.json();
 }
 
@@ -77,7 +82,7 @@ export async function updateCollection(collectionId: string, collection: Collect
 }
 
 export async function getCollection(collectionId: string): Promise<Collection> {
-    const response = await fetchData(`${USER_API_URL}/api/collections/`+ collectionId,
+    const response = await fetchData(`${USER_API_URL}/api/collections/collectionId/`+ collectionId,
         {
             method: "GET", credentials: 'include'
           
