@@ -9,7 +9,7 @@ const NavBarLoggedOutView = ({ onSignUpClicked, onLoginClicked }: NavBarLoggedOu
     return (
         <>
             <Button onClick={onSignUpClicked} className="buttonColor" >Sign Up</Button>
-            <Button onClick={onLoginClicked} className="buttonColor mar-l" >Log In</Button>
+            <Button onClick={onLoginClicked} className="buttonColor" >Log In</Button>
         </>
     );
 }

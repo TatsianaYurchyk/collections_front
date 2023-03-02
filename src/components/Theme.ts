@@ -7,25 +7,35 @@ export interface DefaultTheme {
     cardColor: string;
     navbarColor:string;
     modalBody:string;
+    tableBackground:string;
+    tableColor:string;
+    borderColor:string;
+    buttonColor:string;
+    btnClose:string;
   }
 
 export const darkTheme = {
     body: "#000",
     textColor: "#fff",
-    // headingColor: "lightblue",
-    cardColor:" rgba(7, 6, 6, 0.795)",
+    cardColor:"#000 ",
     navbarColor:"ightblue",
     modalBody:"#000",
+    tableBackground:"#000",
+    tableColor:"#fff",
+    borderColor:"#fff",
+    buttonColor:"#000",
+    btnClose:"#fff",
   }
   
   export const lightTheme = {
     body: "#fff",
-    // body: "rgb(64, 179, 199)",
     textColor: "#000",
-    // headingColor: "#d23669",
     cardColor:"#fff",
     navbarColor:"rgb(64, 179, 199)",
     modalBody:"#fff",
+    tableBackground:"#fff",
+    tableColor:"#000",
+    borderColor:"text-muted",
   }
   
   export const GlobalStyles = createGlobalStyle <{ theme: DefaultTheme }>`
@@ -33,9 +43,6 @@ export const darkTheme = {
     background: ${props => props.theme.body};
     color: ${props => props.theme.textColor};
     transition: .3s ease;
-   }
-   h2{
-     color: ${props => props.theme.headingColor};
    }
    .cardBody{
     background: ${props => props.theme.cardColor};
@@ -45,6 +52,20 @@ export const darkTheme = {
   }
   .modalBody{
     background: ${props => props.theme.modalBody};
+  }
+  .buttonColor{
+    background: ${props => props.theme.buttonColor};
+  }
+  .btn-close{
+    background-color: ${props => props.theme.btnClose};
+  }
+
+  .MuiDataGrid-root.MuiDataGrid-root--densityStandard.css-18ermex-MuiDataGrid-root{
+    background: ${props => props.theme.tableBackground};
+    color: ${props => props.theme.tableColor};
+  }
+  .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root{
+    color: ${props => props.theme.borderColor};
   }
  
   
