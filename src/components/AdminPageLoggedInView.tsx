@@ -26,8 +26,6 @@ interface AdminPageProps {
 	onLogoutSuccessful: () => void;
 }
 
-// type Row = typeof initialRows[number];
-
 const AdminPageLoggedInView = ({
 	loggedInUser,
 	onLogoutSuccessful,
@@ -192,14 +190,6 @@ const AdminPageLoggedInView = ({
 		}
 	}
 
-	// const setNotAdminAll = () => {
-	// 	isCheck.map((item) =>
-	// 		setNotAdmin(item).then((res) => {
-	// 			loadUsers();
-	// 		})
-	// 	);
-	// };
-
 	const onRowsSelectionHandler = (ids: any) => {
 		const selectedRowsData = ids.map((id: any) =>
 			users.find((user) => user._id === id)
@@ -212,7 +202,7 @@ const AdminPageLoggedInView = ({
 		const toggleUserRole = users.find((user) => user._id === id);
 		toggleUserRole
 			? setAdmin(toggleUserRole).then((res) => {
-				loadUsers();
+					loadUsers();
 			  })
 			: loadUsers();
 	};
@@ -221,8 +211,8 @@ const AdminPageLoggedInView = ({
 		toggleUserRole
 			? setNotAdmin(toggleUserRole).then((res) => {
 					toggleUserRole.username === loggedInUser.username
-					? logout()
-					: loadUsers();
+						? logout()
+						: loadUsers();
 			  })
 			: loadUsers();
 	};
@@ -251,7 +241,7 @@ const AdminPageLoggedInView = ({
 					<div style={{ height: 600, width: "100%" }}>
 						{/* <div style={{ display: 'flex', height: '100%' }}> */}
 						<DataGrid
-						className="table"
+							className="table"
 							rows={users}
 							columns={columns}
 							// pageSize={10}

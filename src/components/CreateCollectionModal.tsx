@@ -16,16 +16,12 @@ import { CollectionInput } from "../network/collections_api";
 import { Console } from "console";
 import { idText } from "typescript";
 import InputGroup from "react-bootstrap/InputGroup";
-// import Collection from "./Collection";
-
-// import { ValueType } from "react-select";
 
 interface CreateCollectionModalProps {
-	collectionToEdit?: Collection,
+	collectionToEdit?: Collection;
 	onDismiss: () => void;
 	onCollectionSaved: (note: Collection) => void;
-	// onLoginSuccessful: (user: User) => void,
-	loggedInUserId:string;
+	loggedInUserId: string;
 }
 
 const CreateCollectionModal = ({
@@ -36,30 +32,22 @@ const CreateCollectionModal = ({
 }: CreateCollectionModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [topics, setTopics] = useState<TopicModel[]>([]);
-	const [selectedOption, setSelectedOption] = useState<TopicModel | null>(
-		null
-	);
-	// const [formValues, setFormValues] = useState<any[]>([]);
+	const [selectedOption, setSelectedOption] = useState<TopicModel | null>(null);
 	const [formValues, setFormValues] = useState<any[]>([]);
 	const [toggle, setToggle] = useState(false);
-	const [countField, setCountField] = useState<number>(1);
-	const [fields, setField] = useState<any[]>([]);
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<CollectionInput>(
-		{defaultValues: {
-            topic: collectionToEdit?.topic || "",
-            description: collectionToEdit?.description || "",
-            name: collectionToEdit?.name || "",
-            fields: collectionToEdit?.fields || [],
-        }}
-    
-	);
-
- 
+	} = useForm<CollectionInput>({
+		defaultValues: {
+			topic: collectionToEdit?.topic || "",
+			description: collectionToEdit?.description || "",
+			name: collectionToEdit?.name || "",
+			fields: collectionToEdit?.fields || [],
+		},
+	});
 
 	useEffect(() => {
 		async function loadTopics() {
@@ -71,35 +59,35 @@ const CreateCollectionModal = ({
 			}
 		}
 		loadTopics();
-		// console.log(topics)
 	}, []);
 
 	useEffect(() => {
 		topics.map((topic) => topic.value);
-		// console.log(topics)
 	}, [topics]);
 
 	useEffect(() => {
 		async function loadCollection() {
 			try {
 				if (collectionToEdit) {
-				const collection = await CollectionsApi.getCollection(collectionToEdit._id);
-				setFormValues(collection.fields);
-				const newTopic=topics.find((topic)=>topic.value==collection.topic);
-					newTopic? setSelectedOption(newTopic):setSelectedOption(null);
-					// console.log(selectedOption)
-			
-			}
-				else {setFormValues([])
-					setSelectedOption(null)
+					const collection = await CollectionsApi.getCollection(
+						collectionToEdit._id
+					);
+					setFormValues(collection.fields);
+					const newTopic = topics.find(
+						(topic) => topic.value == collection.topic
+					);
+					newTopic
+						? setSelectedOption(newTopic)
+						: setSelectedOption(null);
+				} else {
+					setFormValues([]);
+					setSelectedOption(null);
 				}
-
 			} catch (error) {
 				console.error(error);
 			}
 		}
 		loadCollection();
-
 	}, [topics]);
 
 	// const inputRef = useRef();
@@ -108,10 +96,6 @@ const CreateCollectionModal = ({
 	const handleAddField = (e: React.MouseEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 		const values = [...formValues];
-		// values.push({
-		//     //values[e.currentTarget.name] = e.currentTarget.value
-		// });
-		// values.push(e.currentTarget.value)
 		if (inputRef.current) {
 			if (inputRef.current.value) {
 				values.push(inputRef.current.value);
@@ -130,18 +114,6 @@ const CreateCollectionModal = ({
 		setToggle(true);
 	};
 
-	// const handleChange = (
-	// 	e: React.ChangeEvent<HTMLInputElement>,
-	// 	index: any
-	// ) => {
-	// 	const values = [...formValues];
-	// 	values[index].value = e.target.value;
-	// 	setFormValues(values);
-	// 	console.log(formValues);
-	// 	console.log(e.target.value);
-	// 	setToggle(false);
-	// };
-
 	const deleteField = (index: any) => {
 		const values = [...formValues];
 		values.splice(index, 1);
@@ -152,39 +124,41 @@ const CreateCollectionModal = ({
 		try {
 			let collectionResponse: Collection;
 			if (!collectionToEdit) {
-			if (selectedOption) {
-				input.topic = selectedOption.value;
+				if (selectedOption) {
+					input.topic = selectedOption.value;
 
+					if (input.topic) {
+						input.fields = formValues;
+						input.userId = loggedInUserId;
+
+						console.log(input);
+						collectionResponse =
+							await CollectionsApi.createCollection(input);
+
+						onCollectionSaved(collectionResponse);
+						console.log(input);
+					}
+				}
+			} else if (selectedOption) {
+				input.topic = selectedOption.value;
 				if (input.topic) {
-					input.fields=formValues;
-					input.userId=loggedInUserId;
-					
+					input.fields = formValues;
 					console.log(input);
-					collectionResponse = await CollectionsApi.createCollection(
+
+					collectionResponse = await CollectionsApi.updateCollection(
+						collectionToEdit._id,
 						input
 					);
-
 					onCollectionSaved(collectionResponse);
-					console.log(input)
 				}
-			}} else if (selectedOption){ 
-				input.topic = selectedOption.value;
-				if (input.topic) {
-				input.fields=formValues;
-				// input.userId=loggedInUserId;
-				console.log(input)
-			
-			collectionResponse = await CollectionsApi.updateCollection(collectionToEdit._id,input)
-			onCollectionSaved(collectionResponse);
-		}}
+			}
 		} catch (error) {
 			console.error(error);
-			// alert(error);
 		}
 	}
 
 	return (
-		<Modal show onHide={onDismiss} >
+		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton className="modalBody">
 				<Modal.Title>Create a new Collection</Modal.Title>
 			</Modal.Header>
@@ -199,7 +173,6 @@ const CreateCollectionModal = ({
 						placeholder="Name"
 						register={register}
 						registerOptions={{ required: "Required" }}
-						// error={errors.username}
 					/>
 					<TextAreaInputField
 						name="description"
@@ -208,10 +181,13 @@ const CreateCollectionModal = ({
 						placeholder="Description"
 						register={register}
 						registerOptions={{ required: "Required" }}
-						// error={errors.password}
 					/>
-					{collectionToEdit && selectedOption? (
-						<Form.Label> The collections's topic is {selectedOption.value}. If you want you can change it:</Form.Label>
+					{collectionToEdit && selectedOption ? (
+						<Form.Label>
+							{" "}
+							The collections's topic is {selectedOption.value}.
+							If you want you can change it:
+						</Form.Label>
 					) : (
 						""
 					)}
@@ -219,15 +195,11 @@ const CreateCollectionModal = ({
 
 					<Select
 						className="addMargin"
-						// defaultValue={selectedOption}
-						defaultValue= {selectedOption}
-					
-						// onChange={withEvent(setSelectedOption)}
+						defaultValue={selectedOption}
 						onChange={setSelectedOption}
 						options={topics}
 						name="topic"
 					/>
-					
 
 					{formValues.length ? (
 						<Form.Label> Additional Fields</Form.Label>
@@ -278,10 +250,8 @@ const CreateCollectionModal = ({
 						type="submit"
 						disabled={isSubmitting}
 						className="width100 buttonColor">
-					{collectionToEdit?"Update":"Create"}
-					
+						{collectionToEdit ? "Update" : "Create"}
 					</Button>
-
 				</Form>
 			</Modal.Body>
 		</Modal>

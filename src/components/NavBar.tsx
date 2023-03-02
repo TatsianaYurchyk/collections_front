@@ -8,6 +8,7 @@ import { useState } from "react";
 import Brightness3Icon from '@mui/icons-material/Brightness3';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
+
 interface NavBarProps {
     loggedInUser: User | null,
     onSignUpClicked: () => void,
@@ -21,7 +22,7 @@ const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccess
     return (
         <Navbar className="navBar" variant="dark" expand="sm" sticky="top">
             <Container>
-                <Navbar.Brand className="navbarBrand" as={Link} to="/">
+                <Navbar.Brand className="navbarBrand" as={Link} to="/home">
                     Your best collection
                 </Navbar.Brand>
                 <div className="toggleButton"

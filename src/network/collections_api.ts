@@ -4,8 +4,8 @@ import { User } from "../models/user";
 import { Topic } from "../models/topic";
 import { Collection} from "../models/collection";
 
-const USER_API_URL = "https://collections-mern-api.onrender.com";
-//  const USER_API_URL = "http://localhost:8000";
+// const USER_API_URL = "https://collections-mern-api.onrender.com";
+ const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -30,7 +30,6 @@ export async function fetchTopics(): Promise<Topic[]> {
 }
 
 export async function getLoggedInUser(): Promise<User> {
-    // const response = await fetchData("/api/users", { method: "GET" });
     const response = await fetchData(`${USER_API_URL}/api/users`, { method: "GET", credentials: 'include' });
     return response.json();
 }

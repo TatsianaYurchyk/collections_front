@@ -5,8 +5,8 @@ import { Topic } from "../models/topic";
 import { Item } from "../models/item";
 import { Collection} from "../models/collection";
 
- const USER_API_URL = "https://collections-mern-api.onrender.com";
-//   const USER_API_URL = "http://localhost:8000";
+//  const USER_API_URL = "https://collections-mern-api.onrender.com";
+  const USER_API_URL = "http://localhost:8000";
 
 async function fetchData(input: RequestInfo, init?: RequestInit, credentials?: RequestCredentials) {
     const response = await fetch(input, init );
@@ -51,7 +51,7 @@ export async function fetchItems(collectionId: string): Promise<Item[]> {
 }
 
 export async function updateItem(itemId: string, item: ItemInput): Promise<Item> {
-    const response = await fetchData(`${USER_API_URL}/api/collections/`+ itemId,
+    const response = await fetchData(`${USER_API_URL}/api/collections/items/`+ itemId,
         {
             method: "PATCH",
             headers: {

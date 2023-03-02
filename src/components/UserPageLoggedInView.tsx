@@ -1,12 +1,10 @@
 import { User } from "../models/user";
-import { Topic as TopicModel } from "../models/topic";
 import { useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
 import * as CollectionsApi from "../network/collections_api";
 import CreateCollectionModal from "./CreateCollectionModal";
 import { Collection as CollectionModel } from "../models/collection";
 import Collection from './Collection';
-import { Link } from "react-router-dom";
 
 interface UserPageProps {
 	loggedInUser: User;
@@ -31,7 +29,7 @@ const UserPageLoggedInView = ({
 	            setCollectionsLoading(true);
 	            // const collections = await CollectionsApi.fetchCollections();
 	            const collections = await CollectionsApi.fetchCollections(loggedInUser._id);
-	            setCollections(collections);
+	            setCollections(collections.reverse());
 				// console.log("id is " +loggedInUser._id);
 	        } catch (error) {
 	            console.error(error);
@@ -55,20 +53,16 @@ const UserPageLoggedInView = ({
 
 	const collectionsGrid =
         <Row xs={1} md={2} xl={3} className="gx-4 gy-4"
-		// className={`g-4 ${styles.notesGrid}`}
 		>
             {collections.map(collection => (
                 <Col key={collection._id}>
-					{/* <Link to={`/collections/${collection._id}`}> */}
                     <Collection
                         collection={collection}
 						homePage={false}
-                        // className={styles.note}
 						onCollectionClicked={setCollectionToSee}
                         onUpdateCollectionClicked={setCollectionToEdit}
                         onDeleteCollectionClicked={deleteCollection}
                     />
-					{/* </Link> */}
                 </Col>
             ))}
         </Row>
@@ -76,16 +70,12 @@ const UserPageLoggedInView = ({
 	return (
 		<div className="page_container">
 			<div className="d-flex justify-content-center">
-				{/* {" "} */}
 				<h1 className="center">
-					{/* {" "} */}
 					{loggedInUser.username}'s Personal Page
 				</h1>
 			</div>
-			<p className="text-center">UserPageLoggedInView</p>
 
 			<Button onClick={() => setShowCreateCollectionModal(true)} className="blockCenter addMargin buttonColor">
-				{/* {" "} */}
 				Create a new Collection
 			</Button>
 
@@ -99,7 +89,6 @@ const UserPageLoggedInView = ({
                     }
                 </>
             }
-
 
 			{showCreateCollectionModal && (
 				<CreateCollectionModal

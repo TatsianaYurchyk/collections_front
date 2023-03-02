@@ -73,10 +73,6 @@ code {
 .icon:hover {
   scale: 2;
 }
-/* 
-.cardBody{
-  background: rgba(7, 6, 6, 0.795);
-} */
 
 .buttonColor{
   background-color: rgb(64, 179, 199);

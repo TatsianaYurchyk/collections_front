@@ -3,6 +3,7 @@ import { User } from "../models/user";
 import * as UsersApi from "../network/users_api";
 import { useNavigate } from "react-router-dom"
 import { useState } from "react";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 interface NavBarLoggedInViewProps {
     user: User,
@@ -30,9 +31,10 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
             ?<>
             <Navbar.Text className="me-2">
                 You are an admin. Signed in as: {user.username}
+                <AccountBoxIcon onClick={()=>navigate("/") }/>
             </Navbar.Text>
             {!adminPanel?
-            <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}} className="buttonColor">Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)} } className="buttonColor">Back to Home Page</Button>}
+            <Button onClick={() => {navigate("/adminPanel"); setAdminPanel(true)}} className="buttonColor">Admin Panel</Button>:  <Button onClick={() => {navigate("/"); setAdminPanel(false)} } className="buttonColor">Back to Private Page</Button>}
            
             {/* <Button onClick={()=>{logout();navigate("/") }} className="buttonColor">Log Out</Button> */}
             <Button onClick={()=>{logout();navigate("/") }} className="buttonColor">Log Out</Button>
@@ -40,6 +42,7 @@ const NavBarLoggedInView = ({ user, onLogoutSuccessful }: NavBarLoggedInViewProp
             :<>
             <Navbar.Text className="me-2">
                 Signed in as: {user.username}
+                <AccountBoxIcon onClick={()=>navigate("/") }/>
             </Navbar.Text>
             <Button className="buttonColor" onClick={()=>{logout();navigate("/") }}>Log Out</Button>
             </>}
